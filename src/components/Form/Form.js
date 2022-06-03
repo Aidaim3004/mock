@@ -29,7 +29,7 @@ const Form = () => {
     const newdata={...data}
     newdata[e.target.id] = e.target.value
     setData(newdata)
-
+    console.log(newdata)
   }
   return (
   <div className="container margin-bottom">
