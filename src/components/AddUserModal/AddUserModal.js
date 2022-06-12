@@ -3,41 +3,6 @@ import {useFormik} from 'formik';
 import axios from "axios";
 import * as Yup from 'yup';
 
-// const validate = values => {
-//   const errors = {};
-//
-//   if (!values.name) {
-//     errors.name = 'Введите имя студента';
-//   } else if (values.name.length > 15) {
-//     errors.name = 'Must be 15 characters or less';
-//   }
-//
-//   if (!values.group) {
-//     errors.group = 'Введите группу студента';
-//   } else if (values.lastName.length > 20) {
-//     errors.lastName = 'Must be 20 characters or less';
-//   }
-//
-//   if (!values.year) {
-//     errors.year = 'Введите дату зачисления';
-//   } else if (values.lastName.length > 20) {
-//     errors.lastName = 'Must be 20 characters or less';
-//   }
-//
-//   if (!values.phone) {
-//     errors.phone = 'Введите номер телефона студента';
-//   } else if (values.lastName.length > 20) {
-//     errors.lastName = 'Must be 20 characters or less';
-//   }
-//
-//   if (!values.email) {
-//     errors.email = 'Введите e-mail студента';
-//   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-//     errors.email = 'Invalid email address';
-//   }
-//
-//   return errors;
-// }; это чисто формике
 
 const AddUserModal = ({students, setStudents, setOpenModal, editingUser, setEditingUser}) => {
   // const [newStudent, setNewStudent] = useState({
@@ -105,13 +70,13 @@ const AddUserModal = ({students, setStudents, setOpenModal, editingUser, setEdit
         .required('Введите контактный номер студента'),
       email: Yup.string().email('Invalid email address').required('Required'),
     }),
-    onSubmit: async (values) => {
-      if (editingUser.name) {
-        const {data: updatedUser} = await axios.put(`https://629988f86f8c03a978445903.mockapi.io/students/${editingUser.id}`, values)
-        const updateStudentsList = students.map(item => item.id === editingUser.id ? updatedUser : item)
-        setStudents(updateStudentsList)
-      } else {
-        const uploadUser = await axios.post('https://629988f86f8c03a978445903.mockapi.io/students', values)
+    onSubmit: async(values) => {
+      if(editingUser){
+        const {data:updatedUser} = await axios.put(`https://6297ae298d77ad6f75076dfd.mockapi.io/students/${editingUser.id}`, values)
+        const updateStudentList = students.map(item => item.id === updatedUser.id ? updatedUser : item)
+        setStudents(updateStudentList)
+      }else {
+        const uploadUser = await axios.post("https://6297ae298d77ad6f75076dfd.mockapi.io/students/", values)
         setStudents([...students, uploadUser.data])
       }
       setOpenModal(false)
@@ -230,8 +195,8 @@ const AddUserModal = ({students, setStudents, setOpenModal, editingUser, setEdit
           {formik.errors.email ? <div className="text-red-500">{formik.errors.email}</div> : null}
         </div>
         <div>
-
           <button
+            type='submit'
             className="hover:shadow-form rounded-md bg-[#6A64F1] py-3.5 px-6 text-lg font-semibold text-white outline-none"
           >
             {editingUser ? 'Update' : 'Create'}

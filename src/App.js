@@ -15,16 +15,18 @@ function App() {
   const [openModal, setOpenModal] = useState(false)
   const [editingUser, setEditingUser] = useState(null)
 
+
+  const handleEdit = (student) => {
+    setEditingUser(student)
+    setOpenModal(true)
+  }
+
+
   const deleteUser = async (id) => {
     await axios.delete(`https://629988f86f8c03a978445903.mockapi.io/students/${id}`)
     const studentsList = students.filter(item => item.id !== id)
     setStudents(studentsList)
     toast.success("Студент был удален!")
-  }
-
-  const handleEdit = (student) => {
-    setEditingUser(student)
-    setOpenModal(true)
   }
 
   useEffect(() => {
@@ -52,9 +54,7 @@ function App() {
                       setEditingUser={setEditingUser}
 
         />
-
       }
-
       <div className="text-right mr-20">
         <button
           onClick={() => setOpenModal(true)}
