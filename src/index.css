@@ -9,6 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
@@ -18,7 +19,13 @@ code {
 
 .container{
     margin: 0 auto;
+
 }
 .margin-bottom{
     margin-bottom: 30px;
+}
+.icon{
+    color: darkblue;
+    width: 35px;
+    height: 20px;
 }
